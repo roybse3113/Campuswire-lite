@@ -14,9 +14,6 @@ mongoose.connect(MONGO_URI, {
   useUnifiedTopology: true,
 })
 
-app.get('/', (req, res) => res.send('hello world!'))
-
-// always use to handle POST --> req.body
 app.use(express.json())
 
 app.use(
@@ -27,17 +24,10 @@ app.use(
   }),
 )
 
-app.post('/', (req, res) => {
-  if (req.session.username && req.session.password) {
-    res.send(`Welccome back, ${req.session.username}`)
-  } else {
-    res.send('please log in')
-  }
-})
-
 app.use('/account', AccountRouter)
 app.use('/api', ApiRouter)
 
+// error handling middleware at bottom of stack
 app.use((err, req, res, next) => {
   res.status(err.status || 500)
   res.json({

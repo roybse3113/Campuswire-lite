@@ -10,14 +10,15 @@ router.post('/signup', async (req, res, next) => {
 
   if (username.length !== 0) {
     try {
-      const user = await User.create({ username, password })
-      res.send('user created')
+      const user = await User.findOne({ username })
+      if (!user) {
+        await User.create({ username, password })
+        res.send('user created')
+      } else {
+        res.send('duplicate username')
+      }
     } catch (err) {
       next(err)
-      // next(new Error('user signup has problems'))
-      // console.log(err)
-      // res.send('user creation has problems')
-      // throw new Error('user creation has problems')
     }
   } else {
     next(new Error('username is empty'))
@@ -28,7 +29,7 @@ router.post('/login', async (req, res, next) => {
   const { username, password } = req.body
 
   try {
-    if (req.session.username && req.session.password) {
+    if (req.session.user) {
       res.send('user already logged in')
     } else {
       const user = await User.findOne({ username })
@@ -41,6 +42,7 @@ router.post('/login', async (req, res, next) => {
         if (password === passDB) {
           req.session.username = username
           req.session.password = password
+          req.session.user = user
           res.send('user logged in successfully')
         } else {
           res.send('user credentials are wrong')
@@ -49,8 +51,6 @@ router.post('/login', async (req, res, next) => {
     }
   } catch (err) {
     next(err)
-    // next(new Error('user login has problems'))
-    // res.send('user login has problems')
   }
 })
 
@@ -58,6 +58,7 @@ router.post('/login', async (req, res, next) => {
 router.post('/logout', isAuthenticated, (req, res) => {
   req.session.username = null
   req.session.password = null
+  req.session.user = null
   res.send('user has logged out')
 })
 

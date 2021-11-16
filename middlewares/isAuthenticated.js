@@ -1,9 +1,7 @@
 const isAuthenticated = (req, res, next) => {
-  if (req.session.username && req.session.password) {
-    // console.log('authenticated')
+  if (req.session.user && (req.session.username && req.session.password) && req.session.username.length !== 0) {
     next()
   } else {
-    // console.log('un-authenticated')
     next(new Error('un-authenticated'))
   }
 }
