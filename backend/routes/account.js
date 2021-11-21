@@ -4,11 +4,27 @@ const router = express.Router()
 const User = require('../models/user')
 const isAuthenticated = require('../middlewares/isAuthenticated')
 
+// check to see if logged in or not
+
+router.get('/status', async (req, res, next) => {
+  const { username } = req.session
+  if (req.session.user) {
+    try {
+      const user = await User.findOne({ username })
+      res.json(user)
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    res.send('not logged in')
+  }
+})
+
 // signup
 router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body
 
-  if (username.length !== 0) {
+  if (username.length !== 0 && !req.session.user) {
     try {
       const user = await User.findOne({ username })
       if (!user) {
@@ -21,7 +37,8 @@ router.post('/signup', async (req, res, next) => {
       next(err)
     }
   } else {
-    next(new Error('username is empty'))
+    res.send('username is empty or already signed in')
+    // next(new Error('username is empty or already signed in'))
   }
 })
 

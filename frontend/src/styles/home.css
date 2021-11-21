@@ -1,0 +1,85 @@
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+button.questionButton:hover {
+  transition-duration: 0.3s;
+  box-shadow: 0px 0px 5px steelblue;
+}
+
+button.questionButton {
+  width: 300px;
+  word-wrap: break-word;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  border: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+textarea {
+  width: 300px;
+}
+
+li.curr {
+  padding: 15px;
+  max-width: 500px;
+  word-wrap: break-word;
+}
+
+button.first {
+  margin-top: 5px;
+  width: 300px;
+  word-wrap: break-word;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: aquamarine;
+  border: none;
+}
+
+button.first:hover {
+  transition-duration: 0.2s;
+  box-shadow: 0px 0px 5px steelblue;
+}
+
+button.submit {
+  padding: 5px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: aquamarine;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 5px steelblue;
+  margin-bottom: 10px;
+}
+
+button.cancel {
+  padding: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
+  background-color: grey;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 5px steelblue;
+  margin-bottom: 10px;
+}
+
+button.cancel:hover {
+  transition-duration: 0.2s;
+  box-shadow: 0px 0px 10px steelblue;
+}
+
+div.addQuestion {
+  padding: 5px;
+}

@@ -1,0 +1,18 @@
+button.submit {
+  padding: 5px;
+  margin: auto;
+  background-color: aquamarine;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 5px steelblue;
+  margin-bottom: 10px;
+}
+
+div.signup {
+  padding: 10px;
+}
+
+button.submit:hover {
+  transition-duration: 0.2s;
+  box-shadow: 0px 0px 10px steelblue;
+}

@@ -19,8 +19,12 @@ router.post('/questions/add', isAuthenticated, async (req, res, next) => {
   const { questionText } = req.body
   const author = req.session.username
   try {
-    const user = await Question.create({ questionText, author })
-    res.send('question created')
+    if (questionText.length !== 0) {
+      const user = await Question.create({ questionText, author })
+      res.send('question created')
+    } else {
+      res.send('empty question')
+    }
   } catch (err) {
     next(new Error('error adding a question'))
   }
@@ -36,8 +40,12 @@ router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
       res.send('question does not exist')
     } else {
       if (!question.answer) {
-        await Question.updateOne({ _id }, { answer })
-        res.send('question successfully answered')
+        if (answer.length > 0) {
+          await Question.updateOne({ _id }, { answer })
+          res.send('question successfully answered')
+        } else {
+          res.send('empty answer')
+        }
       } else {
         res.send('question already answered')
       }
