@@ -11,9 +11,8 @@ const home = () => {
   const [username, setUsername] = useState('')
 
   const [questionText, setQuestionText] = useState('')
-  const [finalAns, setfinalAns] = useState('')
   const [answer, setAnswer] = useState('')
-  const [q, setQ] = useState(null)
+  const [ID, setID] = useState('')
 
   const [showAddButton, setShowAddButton] = useState(false)
   const [showForm, setShowForm] = useState(false)
@@ -32,7 +31,6 @@ const home = () => {
       _id,
       answer,
     })
-    if (finalAns.length === 0) setfinalAns(answer)
     document.getElementById('input').value = ''
     setAnswer('')
     if (response !== 'question successfully answered') {
@@ -108,31 +106,9 @@ const home = () => {
     return ''
   }
 
-  const displayQuestion = question => {
+  const displayQuestion = id => {
     setShowForm(true)
-    setQ(question)
-    setfinalAns('')
-  }
-
-  const formDisplay = () => {
-    if (showForm) {
-      return (
-        <div className="CurrQuestion">
-          <h6>Question: </h6>
-          <p>{q.questionText}</p>
-          <h6>Author: </h6>
-          <p>{q.author}</p>
-          <h6>Answer: </h6>
-          {q.answer && finalAns.length === 0 ? (
-            <p>{q.answer}</p>
-          ) : (
-            <p>{finalAns}</p>
-          )}
-          {q.answer ? '' : questionForm(q)}
-        </div>
-      )
-    }
-    return ''
+    setID(id)
   }
 
   useEffect(() => {
@@ -172,7 +148,7 @@ const home = () => {
                 <button
                   className="questionButton"
                   type="button"
-                  onClick={() => displayQuestion(question)}
+                  onClick={() => displayQuestion(question._id)}
                 >
                   {question.questionText}
                 </button>
@@ -180,7 +156,20 @@ const home = () => {
             ))}
           </div>
         </li>
-        <li className="curr">{formDisplay()}</li>
+        <li className="curr">
+          {showForm ? data.map(question => ((question._id === ID) ? (
+            <div key={question._id} className="CurrQuestion">
+              <h6>Question: </h6>
+              <p>{question.questionText}</p>
+              <h6>Author: </h6>
+              <p>{question.author}</p>
+              <h6>Answer: </h6>
+              {question.answer ? '' : questionForm(question)}
+              <p>{question.answer}</p>
+            </div>
+          ) : '')) : ''}
+
+        </li>
       </ul>
     </div>
   )
