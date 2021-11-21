@@ -20,7 +20,7 @@ const login = () => {
 
   return (
     <div className="signup">
-      <h1>Log in up page</h1>
+      <h1>Log In page</h1>
       <div className="username">
         <p>username:</p>
         <input onChange={e => setUsername(e.target.value)} />
