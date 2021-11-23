@@ -111,6 +111,21 @@ const home = () => {
     setID(id)
   }
 
+  const selectedQuestion = () => {
+    const curr = data.filter(q => (q._id === ID))
+    return (
+      <div key={curr[0]._id} className="CurrQuestion">
+        <h6>Question: </h6>
+        <p>{curr[0].questionText}</p>
+        <h6>Author: </h6>
+        <p>{curr[0].author}</p>
+        <h6>Answer: </h6>
+        {curr[0].answer ? '' : questionForm(curr[0])}
+        <p>{curr[0].answer}</p>
+      </div>
+    )
+  }
+
   useEffect(() => {
     const intervalID = setInterval(async () => {
       checkStatus()
@@ -156,20 +171,7 @@ const home = () => {
             ))}
           </div>
         </li>
-        <li className="curr">
-          {showForm ? data.map(question => ((question._id === ID) ? (
-            <div key={question._id} className="CurrQuestion">
-              <h6>Question: </h6>
-              <p>{question.questionText}</p>
-              <h6>Author: </h6>
-              <p>{question.author}</p>
-              <h6>Answer: </h6>
-              {question.answer ? '' : questionForm(question)}
-              <p>{question.answer}</p>
-            </div>
-          ) : '')) : ''}
-
-        </li>
+        <li className="curr">{showForm ? selectedQuestion() : ''}</li>
       </ul>
     </div>
   )

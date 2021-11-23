@@ -38,18 +38,15 @@ router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
     // if question is already answered
     if (!question) {
       res.send('question does not exist')
-    } else {
-      if (!question.answer) {
-        if (answer.length > 0) {
-          await Question.updateOne({ _id }, { answer })
-          res.send('question successfully answered')
-        } else {
-          res.send('empty answer')
-        }
+    } else if (!question.answer) {
+      if (answer.length > 0) {
+        await Question.updateOne({ _id }, { answer })
+        res.send('question successfully answered')
       } else {
-        res.send('question already answered')
+        res.send('empty answer')
       }
-      res.send('question handled')
+    } else {
+      res.send('question already answered')
     }
   } catch (err) {
     next(new Error('error answering question'))
